@@ -25,7 +25,7 @@ const Home: NextPage = () => {
         <title> Simple title </title>
       </Head>
       <main className={s.table}>
-        <Dropper title='Todo' elements={elements} />
+        <Dropper title='Todo' elements={[...elements, ...elements]} />
         <Dropper title='In Progress' elements={elements}/>
         <Dropper title='Completed' elements={elements} />
       </main>

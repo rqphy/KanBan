@@ -2,7 +2,15 @@
 
 // Your style here
 .dropper {
-    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+    height: 100%;
     width: 100%;
     background-color: tomato;
+
+    h2 {
+        font-size: 4rem;
+    }
 }
