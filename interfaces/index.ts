@@ -6,3 +6,7 @@ Import and export all your interfaces here :
 export {
   
 }
+
+export interface IElement {
+    title: string,
+}
