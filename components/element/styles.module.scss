@@ -1,0 +1,14 @@
+@import "@styles/theme.scss";
+
+// Your style here
+.element {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: greenyellow;
+    width: 100%;
+    height: 50px;
+    border: 1px solid greenyellow;
+    font-size: 2rem;
+}
