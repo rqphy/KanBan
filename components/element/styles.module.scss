@@ -11,4 +11,9 @@
     height: 50px;
     border: 1px solid greenyellow;
     font-size: 2rem;
+    cursor: grab;
+    
+    &.dragging {
+        cursor: grabbing;
+    }
 }
