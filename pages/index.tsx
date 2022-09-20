@@ -7,6 +7,7 @@ import { v4 as uuid} from 'uuid'
 import { useState, useEffect } from 'react'
 import { GetServerSideProps } from "next";
 
+import { Element } from '@components'
 
 
 const itemsFromBackend = [
@@ -92,7 +93,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title> Simple title </title>
+        <title> Kanban App </title>
       </Head>
       {
         isBrowser ? (
@@ -121,11 +122,9 @@ const Home: NextPage = () => {
                                         ref={provided.innerRef}
                                         {...provided.draggableProps}
                                         {...provided.dragHandleProps}
-                                        className={s.item}
-                                        // style={{...provided.draggableProps.style}}
                                       >
                                         {
-                                          item.content
+										  <Element title={item.content}/>
                                         }
                                       </div>
                                     )
