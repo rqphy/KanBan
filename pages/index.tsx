@@ -30,43 +30,55 @@ const columnsFromBackend = {
   },
 }
 
+const handleColumnChange = (result, columns, setColumns) =>
+{
+	const { source, destination } = result
+	const sourceColumn = columns[source.droppableId]
+	const destColumn = columns[destination.droppableId]
+	const sourceItems = [...sourceColumn.items]
+	const destItems = [...destColumn.items]
+	const [removed] = sourceItems.splice(source.index, 1)
+	destItems.splice(destination.index, 0, removed)
+	setColumns({
+		...columns,
+		[source.droppableId]: {
+		...sourceColumn,
+		items: sourceItems
+		},
+		[destination.droppableId]: {
+		...destColumn,
+		items: destItems
+		}
+	})
+}
+
+const handleColumnOrder = (result, columns, setColumns) =>
+{
+	const { source, destination } = result
+	const column = columns[source.droppableId]
+	const copiedItems = [...column.items]
+	const [removed] = copiedItems.splice(source.index, 1)
+	copiedItems.splice(destination.index, 0, removed)
+	setColumns({
+		...columns,
+		[source.droppableId]: {
+		...column,
+		items: copiedItems
+		}
+	})
+}
+
 const onDragEnd = (result, columns, setColumns) =>
 {
-  if(!result.destination) return
-  const { source, destination } = result
-  if(source.droppableId !== destination.droppableId)
-  {
-    const sourceColumn = columns[source.droppableId]
-    const destColumn = columns[destination.droppableId]
-    const sourceItems = [...sourceColumn.items]
-    const destItems = [...destColumn.items]
-    const [removed] = sourceItems.splice(source.index, 1)
-    destItems.splice(destination.index, 0, removed)
-    setColumns({
-      ...columns,
-      [source.droppableId]: {
-        ...sourceColumn,
-        items: sourceItems
-      },
-      [destination.droppableId]: {
-        ...destColumn,
-        items: destItems
-      }
-    })
-  } else
-  {
-    const column = columns[source.droppableId]
-    const copiedItems = [...column.items]
-    const [removed] = copiedItems.splice(source.index, 1)
-    copiedItems.splice(destination.index, 0, removed)
-    setColumns({
-      ...columns,
-      [source.droppableId]: {
-        ...column,
-        items: copiedItems
-      }
-    })
-  }
+	if(!result.destination) return
+	const { source, destination } = result
+	if(source.droppableId !== destination.droppableId)
+	{
+		handleColumnChange(result, columns, setColumns)
+	} else
+	{
+		handleColumnOrder(result, columns, setColumns)
+	}
 }
 
 const Home: NextPage = () => {
@@ -76,7 +88,6 @@ const Home: NextPage = () => {
   useEffect(() => {
     setIsBrowser(process.browser);
   }, [])
-
 
   return (
     <>
@@ -142,11 +153,8 @@ const Home: NextPage = () => {
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) =>
 {
-
-  resetServerContext()   // <-- CALL RESET SERVER CONTEXT, SERVER SIDE
-
-  return {props: { data : []}}
-
+	resetServerContext()   // <-- CALL RESET SERVER CONTEXT, SERVER SIDE
+	return {props: { data : []}}
 }
 
 export default Home
