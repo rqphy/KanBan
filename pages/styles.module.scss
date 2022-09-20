@@ -8,3 +8,17 @@
     box-sizing: border-box;
     gap: 2rem;
 }
+
+.column {
+    width: 100%;
+    min-height: 500px;
+    background-color: #00000030;
+}
+
+.item {
+    width: 100%;
+    min-height: 200px;
+    margin-top: 2rem;
+    user-select: none;
+    background-color: tomato;
+}
