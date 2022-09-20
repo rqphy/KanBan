@@ -2,23 +2,35 @@
 
 .table {
     display: grid;
-    grid-template-columns: repeat(3, 30%);
+    grid-template-columns: repeat(3, 1fr);
     width: 100%;
+    height: 100vh;
     justify-content: center;
     box-sizing: border-box;
-    gap: 2rem;
+    background-color: #1c232b;
+    font-family: sans-serif;
+    overflow: hidden;
+}
+
+.column__ctn {
+    margin-top: 5rem;
+    background-color: #1c232b;
+    border: 1px solid #FFFFFF50;
+
+    h2 {
+        width: 100%;
+        text-align: center;
+        padding: 2rem;
+        border-bottom: 1px solid #FFFFFF50;
+        font-size: 2rem;
+        color: #FFFFFF;
+    }
 }
 
 .column {
+    display: flex;
+    flex-direction: column;
     width: 100%;
-    min-height: 500px;
-    background-color: #00000030;
-}
-
-.item {
-    width: 100%;
-    min-height: 200px;
-    margin-top: 2rem;
-    user-select: none;
-    background-color: tomato;
+    height: 100%;
+    padding: 1rem;
 }

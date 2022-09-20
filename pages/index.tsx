@@ -100,7 +100,7 @@ const Home: NextPage = () => {
           <main className={s.table}>
             <DragDropContext onDragEnd={result => onDragEnd(result, columns, setColumns)}>
               {Object.entries(columns).map(([ columnId, column ]) => (
-                <div key={columnId}>
+                <div key={columnId} className={s.column__ctn}>
                   <h2>{column.name}</h2>
                   <Droppable droppableId={columnId}>
                     {
