@@ -70,7 +70,7 @@ const handleColumnChange = (result, columns: IData, setColumns: Dispatch<IData>)
 	})
 }
 
-const handleColumnOrder = (result, columns: IData, setColumns: Dispatch<IData>) =>
+const handleColumnOrder = (result, columns: IData, setColumns: Dispatch<IData>): void =>
 {
 	const { source, destination } = result
 	const column: IColumn = columns[source.droppableId]
@@ -86,7 +86,7 @@ const handleColumnOrder = (result, columns: IData, setColumns: Dispatch<IData>) 
 	})
 }
 
-const onDragEnd = (result, columns: IData, setColumns: Dispatch<IData>) =>
+const onDragEnd = (result, columns: IData, setColumns: Dispatch<IData>): void =>
 {
 	if(!result.destination) return
 	const { source, destination } = result
@@ -97,6 +97,22 @@ const onDragEnd = (result, columns: IData, setColumns: Dispatch<IData>) =>
 	{
 		handleColumnOrder(result, columns, setColumns)
 	}
+}
+
+const addTaskToColumn = (columnId: string, columns: IData, setColumns: Dispatch<IData>): void =>
+{
+  const currentColumn: IColumn = columns[columnId]
+  const newItem: IItem = {id: uuid(), content: "New Task"}
+  setColumns({
+    ...columns,
+    [columnId]: {
+      ...currentColumn,
+      items: [
+        ...currentColumn.items,
+        newItem
+      ]
+    }
+  })
 }
 
 const Home: NextPage = () => {
@@ -119,6 +135,7 @@ const Home: NextPage = () => {
               {Object.entries(columns).map(([ columnId, column ]) => (
                 <div key={columnId} className={s.column__ctn}>
                   <h2>{column.name}</h2>
+                  <div className={s.button} onClick={() => addTaskToColumn(columnId, columns, setColumns)}>ADD NEW</div>
                   <Droppable droppableId={columnId}>
                     {
                       (provided) =>
