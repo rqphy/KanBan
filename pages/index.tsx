@@ -134,8 +134,12 @@ const Home: NextPage = () => {
             <DragDropContext onDragEnd={result => onDragEnd(result, columns, setColumns)}>
               {Object.entries(columns).map(([ columnId, column ]) => (
                 <div key={columnId} className={s.column__ctn}>
-                  <h2>{column.name}</h2>
-                  <div className={s.button} onClick={() => addTaskToColumn(columnId, columns, setColumns)}>ADD NEW</div>
+                  <div className={s.head}>
+                    <h2>{column.name}</h2>
+                    <div className={s.button} onClick={() => addTaskToColumn(columnId, columns, setColumns)}>
+                      Add new task
+                    </div>
+                  </div>
                   <Droppable droppableId={columnId}>
                     {
                       (provided) =>
