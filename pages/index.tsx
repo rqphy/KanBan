@@ -35,15 +35,23 @@ const itemsFromBackend: IItem[] = [
 
 const columnsFromBackend: IData = {
   [uuid()]: {
-    name: 'Todo',
+    name: 'Monday',
     items: itemsFromBackend
   },
   [uuid()]: {
-    name: 'In Progress',
+    name: 'Tuesday',
     items: []
   },
   [uuid()]: {
-    name: 'Compledted',
+    name: 'Wednesday',
+    items: []
+  },
+  [uuid()]: {
+    name: 'Thursday',
+    items: []
+  },
+  [uuid()]: {
+    name: 'Friday',
     items: []
   },
 }
