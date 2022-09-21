@@ -4,19 +4,36 @@ import s from "./styles.module.scss"
 import cn from "classnames"
 import { DragDropContext, Droppable, Draggable, resetServerContext } from 'react-beautiful-dnd'
 import { v4 as uuid} from 'uuid'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Dispatch } from 'react'
 import { GetServerSideProps } from "next";
 
 import { Element } from '@components'
 
+interface IItem
+{
+  id: string,
+  content: string
+}
 
-const itemsFromBackend = [
+interface IColumn 
+{
+  name: string,
+  items: IItem[]
+}
+
+interface IData
+{
+  [key: string]: IColumn
+}
+
+
+const itemsFromBackend: IItem[] = [
   {id: uuid(), content: "First task"},
   {id: uuid(), content: "Second task"},
   {id: uuid(), content: "Third task"},
 ]
 
-const columnsFromBackend = {
+const columnsFromBackend: IData = {
   [uuid()]: {
     name: 'Todo',
     items: itemsFromBackend
@@ -31,14 +48,14 @@ const columnsFromBackend = {
   },
 }
 
-const handleColumnChange = (result, columns, setColumns) =>
+const handleColumnChange = (result, columns: IData, setColumns: Dispatch<IData>) =>
 {
 	const { source, destination } = result
-	const sourceColumn = columns[source.droppableId]
-	const destColumn = columns[destination.droppableId]
-	const sourceItems = [...sourceColumn.items]
-	const destItems = [...destColumn.items]
-	const [removed] = sourceItems.splice(source.index, 1)
+	const sourceColumn: IColumn = columns[source.droppableId]
+	const destColumn: IColumn = columns[destination.droppableId]
+	const sourceItems: IItem[] = [...sourceColumn.items]
+	const destItems: IItem[] = [...destColumn.items]
+	const [removed]: IItem[] = sourceItems.splice(source.index, 1)
 	destItems.splice(destination.index, 0, removed)
 	setColumns({
 		...columns,
@@ -53,12 +70,12 @@ const handleColumnChange = (result, columns, setColumns) =>
 	})
 }
 
-const handleColumnOrder = (result, columns, setColumns) =>
+const handleColumnOrder = (result, columns: IData, setColumns: Dispatch<IData>) =>
 {
 	const { source, destination } = result
-	const column = columns[source.droppableId]
-	const copiedItems = [...column.items]
-	const [removed] = copiedItems.splice(source.index, 1)
+	const column: IColumn = columns[source.droppableId]
+	const copiedItems: IItem[] = [...column.items]
+	const [removed]: IItem[] = copiedItems.splice(source.index, 1)
 	copiedItems.splice(destination.index, 0, removed)
 	setColumns({
 		...columns,
@@ -69,7 +86,7 @@ const handleColumnOrder = (result, columns, setColumns) =>
 	})
 }
 
-const onDragEnd = (result, columns, setColumns) =>
+const onDragEnd = (result, columns: IData, setColumns: Dispatch<IData>) =>
 {
 	if(!result.destination) return
 	const { source, destination } = result
@@ -83,8 +100,8 @@ const onDragEnd = (result, columns, setColumns) =>
 }
 
 const Home: NextPage = () => {
-  const [columns, setColumns] = useState(columnsFromBackend)
-  const [isBrowser, setIsBrowser] = useState(false);
+  const [columns, setColumns] = useState<IData>(columnsFromBackend)
+  const [isBrowser, setIsBrowser] = useState<boolean>(false);
 
   useEffect(() => {
     setIsBrowser(process.browser);
@@ -104,7 +121,7 @@ const Home: NextPage = () => {
                   <h2>{column.name}</h2>
                   <Droppable droppableId={columnId}>
                     {
-                      (provided, snapshot) =>
+                      (provided) =>
                         (
                           <div
                             {...provided.droppableProps}
@@ -116,7 +133,7 @@ const Home: NextPage = () => {
                               (
                                 <Draggable key={item.id} draggableId={item.id} index={index}>
                                   {
-                                    (provided, snapshot) =>
+                                    (provided) =>
                                     (
                                       <div
                                         ref={provided.innerRef}
@@ -124,7 +141,7 @@ const Home: NextPage = () => {
                                         {...provided.dragHandleProps}
                                       >
                                         {
-										  <Element title={item.content}/>
+										                      <Element title={item.content}/>
                                         }
                                       </div>
                                     )
