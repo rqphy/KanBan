@@ -107,11 +107,10 @@ const onDragEnd = (result, columns: IData, setColumns: Dispatch<IData>): void =>
 	}
 }
 
-const addTaskToColumn = (columnId: string, columns: IData, setColumns: Dispatch<IData>, taskCounter: number, setTaskCounter: Dispatch<number>): void =>
+const addTaskToColumn = (columnId: string, columns: IData, setColumns: Dispatch<IData>, test: string | null): void =>
 {
   const currentColumn: IColumn = columns[columnId]
-  setTaskCounter(++taskCounter) 
-  const newItem: IItem = {id: uuid(), content: `New Task ${taskCounter}`}
+  const newItem: IItem = {id: uuid(), content: test ? test : 'New Task'}
   setColumns({
     ...columns,
     [columnId]: {
@@ -127,7 +126,6 @@ const addTaskToColumn = (columnId: string, columns: IData, setColumns: Dispatch<
 const Home: NextPage = () => {
   const [columns, setColumns] = useState<IData>(columnsFromBackend)
   const [isBrowser, setIsBrowser] = useState<boolean>(false);
-  const [taskCounter, setTaskCounter] = useState<number>(0)
 
   useEffect(() => {
     setIsBrowser(process.browser);
@@ -146,7 +144,7 @@ const Home: NextPage = () => {
                 <div key={columnId} className={s.column__ctn}>
                   <div className={s.head}>
                     <h2>{column.name}</h2>
-                    <TaskForm onClick={() => addTaskToColumn(columnId, columns, setColumns, taskCounter, setTaskCounter)} />
+                    <TaskForm onClick={(test) => addTaskToColumn(columnId, columns, setColumns, test)} />
                   </div>
                   <Droppable droppableId={columnId}>
                     {
