@@ -7,7 +7,7 @@ import { v4 as uuid} from 'uuid'
 import { useState, useEffect, Dispatch } from 'react'
 import { GetServerSideProps } from "next";
 
-import { Element } from '@components'
+import { Element, TaskForm } from '@components'
 
 interface IItem
 {
@@ -146,9 +146,7 @@ const Home: NextPage = () => {
                 <div key={columnId} className={s.column__ctn}>
                   <div className={s.head}>
                     <h2>{column.name}</h2>
-                    <div className={s.button} onClick={() => addTaskToColumn(columnId, columns, setColumns, taskCounter, setTaskCounter)}>
-                      Add new task
-                    </div>
+                    <TaskForm onClick={() => addTaskToColumn(columnId, columns, setColumns, taskCounter, setTaskCounter)} />
                   </div>
                   <Droppable droppableId={columnId}>
                     {
