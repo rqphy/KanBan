@@ -8,8 +8,16 @@ export type IProps = {
 
 export default function TaskForm ({ onClick }: IProps) {
     return (
-        <div className={s.button} onClick={() => onClick('lol')}>
-            Add new task
-        </div>
+        <form onSubmit={(_event) => {
+            _event.preventDefault()
+            const formData = new FormData(_event.target)
+            const formProps = Object.fromEntries(formData)
+            onClick(formProps.title.toString())
+        }}>
+            <input type="text" name="title" id="title" placeholder="New Task"/>
+            <button className={s.button}>
+                Add new task
+            </button>
+        </form>
     )
 }
