@@ -8,17 +8,17 @@
     align-items: center;
 }
 
-.input {
-    display: block;
+.input, .button {
     width: 90%;
     font-size: 1.5rem;
     padding: 1rem;
+}
+
+.input {
     margin: 1rem;
 }
 
 .button {
-    font-size: 1.5rem;
-    padding: 1rem 3rem;
     border-radius: 4px;
     background-color: #FFFFFF;
     text-align: center;
