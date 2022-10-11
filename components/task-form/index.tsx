@@ -10,7 +10,7 @@ export default function TaskForm ({ onClick }: IProps) {
     return (
         <form className={s.form} onSubmit={(_event) => {
             _event.preventDefault()
-            const formData = new FormData(_event.target)
+            const formData = new FormData(_event.target as HTMLFormElement)
             const formProps = Object.fromEntries(formData)
             onClick(formProps.title.toString())
         }}>

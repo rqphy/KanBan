@@ -2,8 +2,9 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import s from "./styles.module.scss"
 import cn from "classnames"
-import { DragDropContext, Droppable, Draggable, resetServerContext } from 'react-beautiful-dnd'
-import { v4 as uuid} from 'uuid'
+const { DragDropContext, Droppable, Draggable, resetServerContext } = require('react-beautiful-dnd') 
+const { v4 } = require('uuid')
+const uuid = v4
 import { useState, useEffect, Dispatch } from 'react'
 import { GetServerSideProps } from "next";
 
@@ -56,7 +57,7 @@ const columnsFromBackend: IData = {
   },
 }
 
-const handleColumnChange = (result, columns: IData, setColumns: Dispatch<IData>) =>
+const handleColumnChange = (result: any, columns: IData, setColumns: Dispatch<IData>) =>
 {
 	const { source, destination } = result
 	const sourceColumn: IColumn = columns[source.droppableId]
@@ -78,7 +79,7 @@ const handleColumnChange = (result, columns: IData, setColumns: Dispatch<IData>)
 	})
 }
 
-const handleColumnOrder = (result, columns: IData, setColumns: Dispatch<IData>): void =>
+const handleColumnOrder = (result: any, columns: IData, setColumns: Dispatch<IData>): void =>
 {
 	const { source, destination } = result
 	const column: IColumn = columns[source.droppableId]
@@ -94,7 +95,7 @@ const handleColumnOrder = (result, columns: IData, setColumns: Dispatch<IData>):
 	})
 }
 
-const onDragEnd = (result, columns: IData, setColumns: Dispatch<IData>): void =>
+const onDragEnd = (result: any, columns: IData, setColumns: Dispatch<IData>): void =>
 {
 	if(!result.destination) return
 	const { source, destination } = result
@@ -139,7 +140,7 @@ const Home: NextPage = () => {
       {
         isBrowser ? (
           <main className={s.table}>
-            <DragDropContext onDragEnd={result => onDragEnd(result, columns, setColumns)}>
+            <DragDropContext onDragEnd={(result: any) => onDragEnd(result, columns, setColumns)}>
               {Object.entries(columns).map(([ columnId, column ]) => (
                 <div key={columnId} className={s.column__ctn}>
                   <div className={s.head}>
@@ -148,7 +149,7 @@ const Home: NextPage = () => {
                   </div>
                   <Droppable droppableId={columnId}>
                     {
-                      (provided) =>
+                      (provided: any) =>
                         (
                           <div
                             {...provided.droppableProps}
@@ -160,7 +161,7 @@ const Home: NextPage = () => {
                               (
                                 <Draggable key={item.id} draggableId={item.id} index={index}>
                                   {
-                                    (provided) =>
+                                    (provided: any) =>
                                     (
                                       <div
                                         ref={provided.innerRef}
